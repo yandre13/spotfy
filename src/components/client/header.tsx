@@ -1,0 +1,52 @@
+'use client'
+
+import { cn } from '@/lib/cn'
+import { ChevronRight, Home, Search } from 'lucide-react'
+import { ChevronLeft } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+
+type Props = {
+  title: string
+  className?: string
+}
+export default function Header({ className, title }: Props) {
+  const router = useRouter()
+  return (
+    <header
+      className={cn('h-fit bg-gradient-to-b from-emerald-800 p-6', className)}
+    >
+      <div className="w-full mb-4 flex items-center justify-between">
+        <div className="hidden md:flex gap-x-2 items-center">
+          <button
+            className="rounded-full bg-black flex items-center justify-center hover:opacity-75 transition p-1"
+            onClick={() => router.back()}
+          >
+            <ChevronLeft className="pr-0.5" />
+          </button>
+          <button
+            className="rounded-full bg-black flex items-center justify-center hover:opacity-75 transition p-1"
+            onClick={() => router.forward()}
+          >
+            <ChevronRight className="pl-0.5" />
+          </button>
+        </div>
+        <div className="flex md:hidden gap-x-2 items-center">
+          <button className="rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75">
+            <Home className="text-black h-5 w-5" />
+          </button>
+          <button className="rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75">
+            <Search className="text-black h-5 w-5" />
+          </button>
+        </div>
+        <div className="flex justify-between items-center gap-x-4">
+          <>
+            <button>Sign in</button>
+            <button>Sign up</button>
+            {/* TODO: Add shadcn */}
+          </>
+        </div>
+      </div>
+      <h1 className="text-3xl font-semibold pt-2">{title}</h1>
+    </header>
+  )
+}
