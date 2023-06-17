@@ -49,7 +49,7 @@ export default function Sidebar() {
 
   return (
     <aside className="hidden md:flex h-full">
-      <nav className="flex flex-col gap-y-2 bg-black w-full p-2">
+      <nav className="flex flex-col gap-y-2 w-full p-2">
         <Box>
           <ul className="flex flex-col gap-y-4 px-5 py-4">
             {routes.map((route, index) => (

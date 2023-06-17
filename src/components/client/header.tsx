@@ -4,6 +4,7 @@ import { cn } from '@/lib/cn'
 import { ChevronRight, Home, Search } from 'lucide-react'
 import { ChevronLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { Button } from '../ui/button'
 
 type Props = {
   title: string
@@ -40,9 +41,8 @@ export default function Header({ className, title }: Props) {
         </div>
         <div className="flex justify-between items-center gap-x-4">
           <>
-            <button>Sign in</button>
-            <button>Sign up</button>
-            {/* TODO: Add shadcn */}
+            <Button variant="ghost">Sign up</Button>
+            <Button>Sign in</Button>
           </>
         </div>
       </div>
