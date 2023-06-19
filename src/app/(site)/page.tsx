@@ -1,8 +1,10 @@
 import Header from '@/components/client/header'
 import ListItem from '@/components/client/list-item'
 import Box from '@/components/ui/box'
+import { getAuthSession } from '@/lib/auth'
 
-export default function Home() {
+export default async function Home() {
+  const session = await getAuthSession()
   return (
     <main className="p-2 h-full pl-0">
       <Box className="h-full overflow-hidden">
@@ -20,6 +22,7 @@ export default function Home() {
               <h2 className="text-2xl font-semibold">Newest songs!</h2>
             </div>
             <div>List of songs!</div>
+            {JSON.stringify(session)}
           </div>
         </div>
       </Box>

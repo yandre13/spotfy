@@ -2,6 +2,7 @@ import Sidebar from '@/components/client/sidebar'
 import '../styles/globals.css'
 import { Figtree } from 'next/font/google'
 import { cn } from '@/lib/cn'
+import Providers from '@/utils/providers'
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(font.className, 'md:grid md:grid-cols-[300px_1fr]')}>
-        <Sidebar />
-        {children}
+        <Providers>
+          <Sidebar />
+          {children}
+        </Providers>
       </body>
     </html>
   )

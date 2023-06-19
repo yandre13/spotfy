@@ -5,6 +5,7 @@ import { ChevronRight, Home, Search } from 'lucide-react'
 import { ChevronLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Button } from '../ui/button'
+import { signIn } from 'next-auth/react'
 
 type Props = {
   title: string
@@ -12,6 +13,25 @@ type Props = {
 }
 export default function Header({ className, title }: Props) {
   const router = useRouter()
+
+  const loginWithGoogle = async () => {
+    // setIsLoading(true)
+
+    try {
+      await signIn('google')
+    } catch (error) {
+      // toast({
+      //   title: 'Error',
+      //   description: 'There was an error logging in with Google',
+      //   variant: 'destructive',
+      // })
+      console.log('auth error: ', error)
+    }
+    // finally {
+    //   setIsLoading(false)
+    // }
+  }
+
   return (
     <header
       className={cn('h-fit bg-gradient-to-b from-emerald-800 p-6', className)}
@@ -42,7 +62,7 @@ export default function Header({ className, title }: Props) {
         <div className="flex justify-between items-center gap-x-4">
           <>
             <Button variant="ghost">Sign up</Button>
-            <Button>Sign in</Button>
+            <Button onClick={loginWithGoogle}>Sign in</Button>
           </>
         </div>
       </div>

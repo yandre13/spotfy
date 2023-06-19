@@ -1,0 +1,150 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["jsonProtocol"]
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url = env("DATABASE_URL")
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.String
+  access_token       String?  @db.String
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.String
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  username      String?   @unique  
+  accounts      Account[]
+  sessions      Session[]
+  billing_address  Json?
+  payment_method   Json?
+  subscriptions    Subscription[]
+}
+
+// CUSTOMERS
+model Customer {
+  id            String    @id @default(cuid())
+  stripe_customer_id   String   @unique
+  createdAt            DateTime  @default(now()) @db.Timestamp
+  updatedAt            DateTime  @default(now()) @updatedAt @db.Timestamp
+
+}
+
+// PRODUCTS
+model Product {
+  id            String    @id @default(cuid())
+  active      Boolean
+  name        String
+  description String?
+  image       String?
+  metadata    Json?
+  createdAt   DateTime @default(now()) @db.Timestamp
+  updatedAt   DateTime @default(now()) @updatedAt @db.Timestamp
+
+  prices      Price[]
+
+}
+
+// PRICES
+model Price {
+  id            String    @id @default(cuid())
+  product_id        String
+  active            Boolean
+  description       String?
+  unit_amount       Int
+  currency          String   @db.String(3)
+  type              PricingType
+  interval          PricingPlanInterval
+  interval_count    Int
+  trial_period_days Int?
+  metadata          Json?
+  createdAt         DateTime @default(now()) @db.Timestamp
+  updatedAt         DateTime @default(now()) @updatedAt @db.Timestamp
+
+  subscriptions      Subscription[]
+  product Product @relation(fields: [product_id], references: [id])
+}
+
+enum PricingType {
+  one_time
+  recurring
+}
+
+enum PricingPlanInterval {
+  day
+  week
+  month
+  year
+}
+
+// SUBSCRIPTIONS
+model Subscription {
+  id            String    @id @default(cuid())
+  userId              String
+  status               SubscriptionStatus
+  metadata             Json?
+  price_id             String
+  quantity             Int
+  cancel_at_period_end Boolean
+  created              DateTime              @default(now()) @db.Timestamp
+  current_period_start DateTime              @default(now()) @db.Timestamp
+  current_period_end   DateTime              @default(now()) @db.Timestamp
+  ended_at             DateTime?
+  cancel_at            DateTime?
+  canceled_at          DateTime?
+  trial_start          DateTime?
+  trial_end            DateTime?
+
+  user User @relation(fields: [userId], references: [id])
+  price Price @relation(fields: [price_id], references: [id])
+
+}
+
+enum SubscriptionStatus {
+  trialing
+  active
+  canceled
+  incomplete
+  incomplete_expired
+  past_due
+  unpaid
+}
