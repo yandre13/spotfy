@@ -6,14 +6,15 @@ import { ChevronLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Button } from '../ui/button'
 import { signIn } from 'next-auth/react'
+import ModalDialog from '../modal'
+import GoogleIcon from '../svg/google'
 
 type Props = {
   title: string
   className?: string
 }
-export default function Header({ className, title }: Props) {
-  const router = useRouter()
 
+function SignInContent() {
   const loginWithGoogle = async () => {
     // setIsLoading(true)
 
@@ -31,6 +32,20 @@ export default function Header({ className, title }: Props) {
     //   setIsLoading(false)
     // }
   }
+
+  return (
+    <div className="mt-4 flex justify-center flex-col items-center">
+      <p className="text-base text-neutral-400 mb-4">Login to your account:</p>
+      <Button className="gap-x-3 mb-2" onClick={loginWithGoogle}>
+        <GoogleIcon />
+        Sign in with Google
+      </Button>
+    </div>
+  )
+}
+
+export default function Header({ className, title }: Props) {
+  const router = useRouter()
 
   return (
     <header
@@ -62,7 +77,13 @@ export default function Header({ className, title }: Props) {
         <div className="flex justify-between items-center gap-x-4">
           <>
             <Button variant="ghost">Sign up</Button>
-            <Button onClick={loginWithGoogle}>Sign in</Button>
+
+            <ModalDialog
+              label="Sign in"
+              title="Welcome back!"
+              content={<SignInContent />}
+              variant="default"
+            />
           </>
         </div>
       </div>
