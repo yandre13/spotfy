@@ -6,7 +6,7 @@ import { getAuthSession } from '@/lib/auth'
 export default async function Home() {
   const session = await getAuthSession()
   return (
-    <main className="p-2 h-full pl-0">
+    <section className="p-2 h-full pl-0">
       <Box className="h-full overflow-hidden">
         <Header title="Welcome back" />
         <div className="px-6">
@@ -22,10 +22,10 @@ export default async function Home() {
               <h2 className="text-2xl font-semibold">Newest songs!</h2>
             </div>
             <div>List of songs!</div>
-            {JSON.stringify(session)}
+            {JSON.stringify(session, null, 2)}
           </div>
         </div>
       </Box>
-    </main>
+    </section>
   )
 }

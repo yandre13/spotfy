@@ -3,6 +3,7 @@ import '../styles/globals.css'
 import { Figtree } from 'next/font/google'
 import { cn } from '@/lib/cn'
 import Providers from '@/utils/providers'
+import { Toaster } from '@/components/ui/toaster'
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -21,7 +22,10 @@ export default function RootLayout({
       <body className={cn(font.className, 'md:grid md:grid-cols-[300px_1fr]')}>
         <Providers>
           <Sidebar />
-          {children}
+          <main>
+            {children}
+            <Toaster />
+          </main>
         </Providers>
       </body>
     </html>

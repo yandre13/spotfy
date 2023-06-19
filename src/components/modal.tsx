@@ -17,11 +17,20 @@ type Props = {
   title: string
   content: React.ReactNode | string
   variant?: ButtonVariantProps['variant']
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
-export default function ModalDialog({ label, title, content, variant }: Props) {
+export default function ModalDialog({
+  label,
+  title,
+  content,
+  variant,
+  open,
+  onOpenChange,
+}: Props) {
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogTrigger asChild>
         <Button variant={variant || 'outline'}>{label}</Button>
       </AlertDialogTrigger>
