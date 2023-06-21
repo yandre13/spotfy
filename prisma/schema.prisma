@@ -58,6 +58,8 @@ model User {
   billing_address  Json?
   payment_method   Json?
   subscriptions    Subscription[]
+  songs            Song[]
+  liked_songs      LikedSong[]
 }
 
 // CUSTOMERS
@@ -147,4 +149,36 @@ enum SubscriptionStatus {
   incomplete_expired
   past_due
   unpaid
+}
+
+// SONGS
+
+model Song {
+  id            String    @id @default(cuid())
+  title         String
+  author        String
+  image_url         String
+  song_url         String
+  createdAt     DateTime @default(now()) @db.Timestamp
+  updatedAt     DateTime @default(now()) @updatedAt @db.Timestamp
+
+  // relationships
+  user_id     String
+  user        User @relation(fields: [user_id], references: [id])
+  genres        String[]
+  liked_by      LikedSong[]
+}
+
+// LIKED SONGS
+
+model LikedSong {
+  user_id       String
+  song_id       String
+  createdAt     DateTime @default(now()) @db.Timestamp
+  updatedAt     DateTime @default(now()) @updatedAt @db.Timestamp
+
+  // relationships
+  user          User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  song          Song @relation(fields: [song_id], references: [id], onDelete: Cascade)
+  @@id([user_id, song_id])
 }

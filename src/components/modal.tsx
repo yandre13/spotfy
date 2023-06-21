@@ -10,15 +10,17 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button, ButtonVariantProps } from '@/components/ui/button'
+import { cn } from '@/lib/cn'
 import { X } from 'lucide-react'
 
 type Props = {
-  label: string
+  label: string | React.ReactNode
   title: string
   content: React.ReactNode | string
   variant?: ButtonVariantProps['variant']
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  labelClass?: string
 }
 
 export default function ModalDialog({
@@ -28,11 +30,14 @@ export default function ModalDialog({
   variant,
   open,
   onOpenChange,
+  labelClass,
 }: Props) {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogTrigger asChild>
-        <Button variant={variant || 'outline'}>{label}</Button>
+        <Button variant={variant || 'outline'} className={cn(labelClass)}>
+          {label}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

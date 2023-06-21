@@ -1,5 +1,6 @@
 import Header from '@/components/client/header'
 import ListItem from '@/components/client/list-item'
+import UploadForm from '@/components/client/upload-test'
 import Box from '@/components/ui/box'
 import { getAuthSession } from '@/lib/auth'
 
@@ -23,6 +24,7 @@ export default async function Home() {
             </div>
             <div>List of songs!</div>
             {JSON.stringify(session, null, 2)}
+            <UploadForm />
           </div>
         </div>
       </Box>

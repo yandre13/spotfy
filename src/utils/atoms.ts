@@ -4,6 +4,7 @@ const initialModals = {
   signIn: false,
   signUp: false,
   subscribe: false,
+  upload: false,
 }
 export type ModalsProps = typeof initialModals
 export const modalsAtom = atom(initialModals)
