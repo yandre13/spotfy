@@ -1,5 +1,5 @@
 import { db } from '@/lib/db'
-import { Song } from '@prisma/client'
+import { type Song, Prisma } from '@prisma/client'
 
 export async function getSongs() {
   const songs = await db.song.findMany()
@@ -26,4 +26,11 @@ export async function addSong(
   })
 
   return newSong
+}
+
+export async function getSongsByTitle(title: string) {
+  const songs = (await db.$queryRaw(
+    Prisma.sql`SELECT * FROM public."Song" WHERE SIMILARITY(title, ${title}) > 0.15`
+  )) as Song[]
+  return songs || []
 }

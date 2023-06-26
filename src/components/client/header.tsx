@@ -69,7 +69,6 @@ export default function Header({ className, title }: Props) {
     router.refresh()
   }
 
-  console.log('user: ', user)
   return (
     <header
       className={cn('h-fit bg-gradient-to-b from-emerald-800 p-6', className)}
