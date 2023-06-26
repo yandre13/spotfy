@@ -61,12 +61,15 @@ function SignInContent({ signUp }: { signUp?: boolean }) {
 export default function Header({ className, title }: Props) {
   const router = useRouter()
   const { modals, onOpenChangeSignIn, onOpenChangeSignUp } = useModals()
-  const { user, loading } = useAuth()
+  const { user, loading, clearUser } = useAuth()
 
   const handleSignOut = async () => {
     signOut()
+    clearUser()
     router.refresh()
   }
+
+  console.log('user: ', user)
   return (
     <header
       className={cn('h-fit bg-gradient-to-b from-emerald-800 p-6', className)}

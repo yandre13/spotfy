@@ -3,6 +3,9 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import GoogleProvider from 'next-auth/providers/google'
 import { db } from './db'
 import { nanoid } from 'nanoid'
+import { cookies } from 'next/headers'
+import { encrypt } from '@/utils/crypto'
+import { SESSION_NAME } from '@/utils/constants'
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -65,7 +68,12 @@ export const authOptions: NextAuthOptions = {
     redirect() {
       return '/'
     },
+    async signIn({ user }) {
+      if (user) {
+        cookies().set(SESSION_NAME, encrypt(JSON.stringify(user)))
+      }
+      return true
+    },
   },
 }
-
 export const getAuthSession = () => getServerSession(authOptions)

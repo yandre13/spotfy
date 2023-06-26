@@ -1,12 +1,24 @@
-import { useSession } from 'next-auth/react'
+import { User, getUserCookie } from '@/utils/session'
+import { useEffect, useState } from 'react'
+import { removeUserCookie } from '@/utils/session'
 
 export default function useAuth() {
-  const session = useSession()
-  const loading = session?.status === 'loading'
-  const user = session?.data?.user ?? null
+  const [userState, setUserState] = useState<User>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setLoading(true)
+    const user = getUserCookie(() => {
+      setLoading(false)
+    })
+    if (user) {
+      setUserState(user)
+    }
+  }, [])
 
   return {
-    user,
+    user: userState,
     loading,
+    clearUser: removeUserCookie,
   }
 }
