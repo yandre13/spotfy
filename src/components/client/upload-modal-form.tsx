@@ -1,20 +1,17 @@
 'use client'
-
-import { ListMusic, Plus } from 'lucide-react'
-import ModalDialog from '../modal'
-import { useModals } from '@/hooks/use-modals'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import { useToast } from '@/hooks/use-toast'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import useAuth from '@/hooks/use-auth'
+import { uploadToS3 } from '@/utils/upload-to-s3'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
-import { uploadToS3 } from '@/utils/upload-to-s3'
-import { useToast } from '@/hooks/use-toast'
-import { useState } from 'react'
-import useAuth from '@/hooks/use-auth'
-import { Upload } from 'lucide-react'
 import Spinner from '../spinner'
+import { Upload } from 'lucide-react'
 
 const schema = z.object({
   author: z.string().nonempty({ message: 'Author is required' }),
@@ -38,7 +35,7 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>
 
-function ModalUpload() {
+export default function UploadModalForm() {
   const {
     register,
     handleSubmit,
@@ -57,6 +54,9 @@ function ModalUpload() {
   const { toast } = useToast()
   const [loading, setLoading] = useState(false)
   const { user } = useAuth()
+
+  const router = useRouter()
+
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     setLoading(true)
     const { author, title } = data
@@ -86,7 +86,10 @@ function ModalUpload() {
         body: JSON.stringify(newSong),
       })
       const data = await res.json()
+      // const parsedData = api.songs.POST.schema.parse(data)
       // data.status === 201
+      // console.log(parsedData)
+      router.refresh()
       toast({
         title: 'Success',
         description: 'Your song was uploaded successfully',
@@ -198,33 +201,5 @@ function ModalUpload() {
         </Button>
       </form>
     </>
-  )
-}
-
-export default function Library() {
-  const { modals, onOpenChangeUpload } = useModals()
-  const handleClick = () => {
-    console.log('clicked')
-  }
-  return (
-    <div className="flex flex-col">
-      <div className="flex items-center justify-between px-5 py-4">
-        <div className="inline-flex items-center gap-x-2">
-          <ListMusic className="text-neutral-400" size={26} />
-          <p className="font-medium text-neutral-400">Your library</p>
-        </div>
-        <ModalDialog
-          label={
-            <Plus className="text-neutral-400 transition cursor-pointer hover:text-white" />
-          }
-          labelClass="p-0 h-auto bg-transparent border-none"
-          title="Add a new song"
-          content={<ModalUpload />}
-          open={modals.upload}
-          onOpenChange={onOpenChangeUpload}
-        />
-      </div>
-      <div className="flex flex-col gap-y-2 mt-4 px-3">List of songs!</div>
-    </div>
   )
 }

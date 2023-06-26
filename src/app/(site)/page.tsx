@@ -1,11 +1,14 @@
 import Header from '@/components/client/header'
 import ListItem from '@/components/client/list-item'
-import UploadForm from '@/components/client/upload-test'
+import SongItem from '@/components/client/song-item'
 import Box from '@/components/ui/box'
-import { getAuthSession } from '@/lib/auth'
+import { getSongs } from '@/db/functions/songs'
+
+export const revalidate = 0
 
 export default async function Home() {
-  const session = await getAuthSession()
+  const songs = await getSongs()
+
   return (
     <section className="p-2 h-full pl-0">
       <Box className="h-full overflow-hidden">
@@ -22,9 +25,11 @@ export default async function Home() {
             <div className="flex justify-between">
               <h2 className="text-2xl font-semibold">Newest songs!</h2>
             </div>
-            <div>List of songs!</div>
-            {JSON.stringify(session, null, 2)}
-            <UploadForm />
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-8 gap-4 mt-4">
+              {songs.map((song) => (
+                <SongItem key={song.id}>{song.title}</SongItem>
+              ))}
+            </div>
           </div>
         </div>
       </Box>
