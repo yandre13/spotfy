@@ -3,6 +3,7 @@ import SearchContent from '@/components/client/search-content'
 import SearchInput from '@/components/client/search-input'
 import Box from '@/components/ui/box'
 import { getSongsByTitle } from '@/db/functions/songs'
+import { getAuthSession } from '@/lib/auth'
 
 export const revalidate = 0
 
@@ -12,7 +13,10 @@ interface SearchProps {
 
 export default async function SearchPage({ searchParams }: SearchProps) {
   const { q = '' } = searchParams
-  const songs = await getSongsByTitle(q)
+  const session = await getAuthSession()
+  const songs = await getSongsByTitle(q, {
+    userId: session?.user?.id,
+  })
 
   return (
     <section className="p-2 h-full pl-0">

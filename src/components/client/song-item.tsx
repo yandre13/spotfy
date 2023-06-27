@@ -18,6 +18,7 @@ export default function SongItem({ children }: { children: React.ReactNode }) {
         />
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">
+        {/* TODO: Add song title */}
         <p className="font-semibold truncate w-full">TS</p>
         <p className="text-neutral-400 text-sm pb-4 w-full truncate">By: TS</p>
       </div>

@@ -15,8 +15,9 @@ import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 
 type Props = {
-  title: string
+  title?: string
   className?: string
+  children?: React.ReactNode
 }
 
 function SignInContent({ signUp }: { signUp?: boolean }) {
@@ -58,7 +59,7 @@ function SignInContent({ signUp }: { signUp?: boolean }) {
   )
 }
 
-export default function Header({ className, title }: Props) {
+export default function Header({ className, title, children }: Props) {
   const router = useRouter()
   const { modals, onOpenChangeSignIn, onOpenChangeSignUp } = useModals()
   const { user, loading, clearUser } = useAuth()
@@ -129,7 +130,10 @@ export default function Header({ className, title }: Props) {
           )}
         </div>
       </div>
-      <h1 className="text-3xl font-semibold pt-2">{title}</h1>
+      {typeof title === 'string' && (
+        <h1 className="text-3xl font-semibold pt-2">{title}</h1>
+      )}
+      {children}
     </header>
   )
 }

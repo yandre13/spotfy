@@ -1,6 +1,9 @@
 'use client'
+import useAuth from '@/hooks/use-auth'
+import useModals from '@/hooks/use-modals'
 import { Play } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   title: string
@@ -8,9 +11,16 @@ type Props = {
   image: string
 }
 export default function ListItem({ title, href, image }: Props) {
+  const router = useRouter()
+  const { user } = useAuth()
+  const { onOpenChangeSignIn } = useModals()
+
   const onClick = () => {
-    //TODO: Add auth check
-    console.log('clicked')
+    if (!user) {
+      onOpenChangeSignIn(true)
+      return
+    }
+    router.push(href)
   }
 
   return (
