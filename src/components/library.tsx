@@ -3,6 +3,7 @@ import LibraryAdd from './client/library-add'
 import { getAuthSession } from '@/lib/auth'
 import { getSongsByUser } from '@/db/functions/songs'
 import MediaItem from './client/media-item'
+import LibraryContent from './client/library-content'
 
 export default async function Library() {
   const session = await getAuthSession()
@@ -19,9 +20,7 @@ export default async function Library() {
         <LibraryAdd />
       </div>
       <div className="flex flex-col gap-y-2 mt-4 px-3">
-        {mySongs.map((song, index) => (
-          <MediaItem key={index} {...song} />
-        ))}
+        <LibraryContent songs={mySongs} />
       </div>
     </div>
   )

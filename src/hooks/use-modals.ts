@@ -4,7 +4,7 @@ import useAuth from './use-auth'
 
 export default function useModals() {
   const [modals, setModals] = useAtom(modalsAtom)
-  const { user } = useAuth()
+
   const onOpenChange = (modalName: keyof ModalsProps, open: boolean) => {
     setModals((prevModals) => ({
       ...prevModals,
@@ -18,13 +18,8 @@ export default function useModals() {
   const onOpenChangeSignUp = (open: boolean) => {
     onOpenChange('signUp', open)
   }
-
   const onOpenChangeUpload = (open: boolean) => {
-    if (!user) {
-      onOpenChange('signIn', open)
-    } else {
-      onOpenChange('upload', open)
-    }
+    onOpenChange('upload', open)
   }
 
   return {

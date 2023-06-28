@@ -72,7 +72,7 @@ export default function LikeButton({
       <Heart
         className={cn(
           'transition-all duration-300 ease-in-out cursor-pointer w-5 h-5',
-          isLiked && 'text-green-500 border-green-500 fill-green-500'
+          isLiked && 'text-transparent border-green-500 fill-green-500'
         )}
       />
     </button>

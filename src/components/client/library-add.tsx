@@ -4,12 +4,20 @@ import { Plus } from 'lucide-react'
 import ModalDialog from '../modal'
 import UploadModalForm from './upload-modal-form'
 import useModals from '@/hooks/use-modals'
+import useAuth from '@/hooks/use-auth'
 
 export default function LibraryAdd() {
-  const { modals, onOpenChangeUpload } = useModals()
-  const handleClick = () => {
-    console.log('clicked')
+  const { modals, onOpenChangeSignIn, onOpenChangeUpload } = useModals()
+  const { user } = useAuth()
+
+  const handleClick = (e: boolean) => {
+    if (!user) {
+      onOpenChangeSignIn(true)
+      return
+    }
+    onOpenChangeUpload(e)
   }
+
   return (
     <ModalDialog
       label={
@@ -19,7 +27,7 @@ export default function LibraryAdd() {
       title="Add a new song"
       content={<UploadModalForm />}
       open={modals.upload}
-      onOpenChange={onOpenChangeUpload}
+      onOpenChange={handleClick}
     />
   )
 }

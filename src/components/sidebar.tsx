@@ -6,7 +6,7 @@ import Spinner from './spinner'
 
 export default function Sidebar() {
   return (
-    <aside className="hidden md:flex h-full">
+    <aside className="hidden md:flex h-full" id="Sidebar">
       <nav className="flex flex-col gap-y-2 w-full p-2">
         <Box>
           <SidebarList />

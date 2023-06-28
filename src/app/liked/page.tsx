@@ -1,6 +1,5 @@
 import Header from '@/components/client/header'
 import LikedContent from '@/components/client/liked-content'
-import MediaItem from '@/components/client/media-item'
 import Box from '@/components/ui/box'
 import { getLikedSongs } from '@/db/functions/songs'
 import { getAuthSession } from '@/lib/auth'
@@ -30,11 +29,13 @@ function Title() {
     </div>
   )
 }
+
+//TODO: add middleware to check if user is logged in
 export default async function LikedPage() {
   const session = await getAuthSession()
   const likedSongs = await getLikedSongs(session?.user?.id)
   return (
-    <section className="p-2 h-full pl-0">
+    <section>
       <Box className="h-full overflow-hidden">
         <Header>
           <Title />

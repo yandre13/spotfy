@@ -104,3 +104,27 @@ export async function getLikedSongs(userId: string | undefined) {
   }) as SongWithLiked[]
   return songs || []
 }
+
+export async function getSong(id: string, userId?: string | null) {
+  if (!id) {
+    return null
+  }
+  const song = await db.song.findUnique({
+    where: {
+      id,
+    },
+  })
+  // add liked property
+  if (userId) {
+    const likedSongs = await db.likedSong.findMany({
+      where: {
+        user_id: userId,
+      },
+    })
+    const likedSongIds = likedSongs.map((song) => song.song_id)
+    ;(song as SongWithLiked).liked = likedSongIds.includes(song?.id || '')
+  } else {
+    ;(song as SongWithLiked).liked = false
+  }
+  return song as SongWithLiked
+}

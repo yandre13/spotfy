@@ -10,7 +10,7 @@ export default async function Home() {
   const songs = await getSongs()
 
   return (
-    <section className="p-2 h-full pl-0">
+    <section>
       <Box className="h-full overflow-hidden">
         <Header title="Welcome back" />
         <div className="px-6">
@@ -27,7 +27,7 @@ export default async function Home() {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-8 gap-4 mt-4">
               {songs.map((song) => (
-                <SongItem key={song.id}>{song.title}</SongItem>
+                <SongItem key={song.id} song={song} songs={songs} />
               ))}
             </div>
           </div>
