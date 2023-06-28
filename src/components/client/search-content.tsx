@@ -1,3 +1,5 @@
+'use client'
+
 import MediaItem from './media-item'
 import LikeButton from './like-button'
 import type { SongWithLiked } from '@/db/functions/songs'
