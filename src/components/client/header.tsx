@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/cn'
-import { ChevronRight, Home, Search, User } from 'lucide-react'
+import { ChevronRight, Home, Search } from 'lucide-react'
 import { ChevronLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Button } from '../ui/button'
@@ -13,6 +13,7 @@ import useAuth from '@/hooks/use-auth'
 import Spinner from '../spinner'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
+import SubscribeButton from './subscribe-button'
 
 type Props = {
   title?: string
@@ -62,11 +63,10 @@ function SignInContent({ signUp }: { signUp?: boolean }) {
 export default function Header({ className, title, children }: Props) {
   const router = useRouter()
   const { modals, onOpenChangeSignIn, onOpenChangeSignUp } = useModals()
-  const { user, loading, clearUser } = useAuth()
+  const { user } = useAuth()
 
   const handleSignOut = async () => {
     signOut()
-    clearUser()
     router.refresh()
   }
 
@@ -98,16 +98,16 @@ export default function Header({ className, title, children }: Props) {
           </button>
         </div>
         <div className="flex justify-between items-center gap-x-4">
-          {loading && !user && <Spinner className="m-0 h-10 w-10" />}
-          {!loading && user && (
+          {user && (
             <>
               <Button onClick={handleSignOut}>Sign out</Button>
-              <Button className="w-auto p-2">
+              {/* <Button className="w-auto p-2">
                 <User />
-              </Button>
+              </Button> */}
+              <SubscribeButton />
             </>
           )}
-          {!loading && !user && (
+          {!user && (
             <>
               <ModalDialog
                 label="Sign up"

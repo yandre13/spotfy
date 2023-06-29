@@ -1,24 +1,13 @@
-import { User, getUserCookie } from '@/utils/session'
-import { useEffect, useState } from 'react'
-import { removeUserCookie } from '@/utils/session'
+import { useContext } from 'react'
+import { AuthContext } from '@/context/auth-context'
 
 export default function useAuth() {
-  const [userState, setUserState] = useState<User>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    setLoading(true)
-    const user = getUserCookie(() => {
-      setLoading(false)
-    })
-    if (user) {
-      setUserState(user)
-    }
-  }, [])
-
+  const auth = useContext(AuthContext)
+  if (!auth) {
+    throw new Error('useAuth must be used within an AuthProvider')
+  }
   return {
-    user: userState,
-    loading,
-    clearUser: removeUserCookie,
+    user: auth.user,
+    userInfo: auth.userInfo,
   }
 }
