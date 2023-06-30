@@ -9,5 +9,6 @@ export default function useAuth() {
   return {
     user: auth.user,
     userInfo: auth.userInfo,
+    subscribed: auth.subscribed,
   }
 }

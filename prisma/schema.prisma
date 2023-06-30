@@ -66,6 +66,7 @@ model User {
 model Customer {
   id            String    @id @default(cuid())
   stripe_customer_id   String   @unique
+  email         String?   @unique
   createdAt            DateTime  @default(now()) @db.Timestamp
   updatedAt            DateTime  @default(now()) @updatedAt @db.Timestamp
 
@@ -92,11 +93,11 @@ model Price {
   product_id        String
   active            Boolean
   description       String?
-  unit_amount       Int
+  unit_amount       Int?
   currency          String   @db.String(3)
   type              PricingType
-  interval          PricingPlanInterval
-  interval_count    Int
+  interval          PricingPlanInterval?
+  interval_count    Int?
   trial_period_days Int?
   metadata          Json?
   createdAt         DateTime @default(now()) @db.Timestamp

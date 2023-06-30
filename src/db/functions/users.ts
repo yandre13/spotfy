@@ -7,7 +7,11 @@ export async function getUserInfo(id?: string) {
     include: {
       subscriptions: {
         include: {
-          price: true,
+          price: {
+            include: {
+              product: true,
+            },
+          },
         },
       },
     },

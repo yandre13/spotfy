@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/cn'
-import { ChevronRight, Home, Search } from 'lucide-react'
+import { ChevronRight, Home, Search, User } from 'lucide-react'
 import { ChevronLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Button } from '../ui/button'
@@ -13,7 +13,8 @@ import useAuth from '@/hooks/use-auth'
 import Spinner from '../spinner'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
-import SubscribeButton from './subscribe-button'
+import usePlayer from '@/hooks/use-player'
+import Link from 'next/link'
 
 type Props = {
   title?: string
@@ -21,51 +22,13 @@ type Props = {
   children?: React.ReactNode
 }
 
-function SignInContent({ signUp }: { signUp?: boolean }) {
-  const [loading, setLoading] = useState(false)
-  const { toast } = useToast()
-  const loginWithGoogle = async () => {
-    setLoading(true)
-    try {
-      await signIn('google')
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'There was an error logging in with Google',
-        variant: 'destructive',
-      })
-      console.log('auth error: ', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const label = signUp ? 'Sign up with Google' : 'Sign in with Google'
-  return (
-    <div className="mt-4 flex justify-center flex-col items-center">
-      <p className="text-base text-neutral-400 mb-4">
-        {signUp ? 'Sign up with your account:' : 'Sign in to your account:'}
-      </p>
-      <Button className="gap-x-3 mb-2" onClick={loginWithGoogle}>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <>
-            <GoogleIcon />
-            {label}
-          </>
-        )}
-      </Button>
-    </div>
-  )
-}
-
 export default function Header({ className, title, children }: Props) {
   const router = useRouter()
   const { modals, onOpenChangeSignIn, onOpenChangeSignUp } = useModals()
   const { user } = useAuth()
-
+  const player = usePlayer()
   const handleSignOut = async () => {
+    player.reset()
     signOut()
     router.refresh()
   }
@@ -101,31 +64,19 @@ export default function Header({ className, title, children }: Props) {
           {user && (
             <>
               <Button onClick={handleSignOut}>Sign out</Button>
-              {/* <Button className="w-auto p-2">
-                <User />
-              </Button> */}
-              <SubscribeButton />
+              <Button className="w-auto p-2" asChild>
+                <Link href="/account">
+                  <User />
+                </Link>
+              </Button>
             </>
           )}
           {!user && (
             <>
-              <ModalDialog
-                label="Sign up"
-                title="Welcome!"
-                content={<SignInContent signUp />}
-                variant="ghost"
-                open={modals.signUp}
-                onOpenChange={onOpenChangeSignUp}
-              />
-
-              <ModalDialog
-                label="Sign in"
-                title="Welcome back!"
-                content={<SignInContent />}
-                variant="default"
-                open={modals.signIn}
-                onOpenChange={onOpenChangeSignIn}
-              />
+              <Button variant="ghost" onClick={() => onOpenChangeSignUp(true)}>
+                Sign up
+              </Button>
+              <Button onClick={() => onOpenChangeSignIn(true)}>Sign in</Button>
             </>
           )}
         </div>

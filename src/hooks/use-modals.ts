@@ -1,6 +1,5 @@
 import { type ModalsProps, modalsAtom } from '@/utils/atoms'
 import { useAtom } from 'jotai'
-import useAuth from './use-auth'
 
 export default function useModals() {
   const [modals, setModals] = useAtom(modalsAtom)
@@ -21,11 +20,15 @@ export default function useModals() {
   const onOpenChangeUpload = (open: boolean) => {
     onOpenChange('upload', open)
   }
+  const onOpenChangeSubscribe = (open: boolean) => {
+    onOpenChange('subscribe', open)
+  }
 
   return {
     modals,
     onOpenChangeSignIn,
     onOpenChangeSignUp,
     onOpenChangeUpload,
+    onOpenChangeSubscribe,
   }
 }

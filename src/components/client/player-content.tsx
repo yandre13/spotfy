@@ -28,7 +28,6 @@ function VolumeControls() {
   const IconVolume =
     volume > 0 && volume < 50 ? Volume1 : volume >= 50 ? Volume2 : VolumeX
 
-  console.log(volume)
   return (
     <div className="flex items-center gap-x-2 w-[120px]">
       <button

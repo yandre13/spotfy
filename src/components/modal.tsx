@@ -14,31 +14,31 @@ import { cn } from '@/lib/cn'
 import { X } from 'lucide-react'
 
 type Props = {
-  label: string | React.ReactNode
+  // label: string | React.ReactNode
   title: string
   content: React.ReactNode | string
-  variant?: ButtonVariantProps['variant']
+  // variant?: ButtonVariantProps['variant']
   open?: boolean
   onOpenChange?: (open: boolean) => void
-  labelClass?: string
+  // labelClass?: string
 }
 
 export default function ModalDialog({
-  label,
+  // label,
   title,
   content,
-  variant,
+  // variant,
   open,
   onOpenChange,
-  labelClass,
-}: Props) {
+}: // labelClass,
+Props) {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogTrigger asChild>
+      {/* <AlertDialogTrigger asChild>
         <Button variant={variant || 'outline'} className={cn(labelClass)}>
           {label}
         </Button>
-      </AlertDialogTrigger>
+      </AlertDialogTrigger> */}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-center text-2xl">

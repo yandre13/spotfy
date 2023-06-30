@@ -12,6 +12,8 @@ import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import Spinner from '../spinner'
 import { Upload } from 'lucide-react'
+import ModalDialog from '../modal'
+import useModals from '@/hooks/use-modals'
 
 const schema = z.object({
   author: z.string().nonempty({ message: 'Author is required' }),
@@ -35,7 +37,7 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>
 
-export default function UploadModalForm() {
+export function UploadModalForm() {
   const {
     register,
     handleSubmit,
@@ -201,5 +203,18 @@ export default function UploadModalForm() {
         </Button>
       </form>
     </>
+  )
+}
+
+export default function UploadModal() {
+  const { modals, onOpenChangeUpload } = useModals()
+
+  return (
+    <ModalDialog
+      title="Add a new song"
+      content={<UploadModalForm />}
+      open={modals.upload}
+      onOpenChange={onOpenChangeUpload}
+    />
   )
 }

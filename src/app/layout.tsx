@@ -8,6 +8,9 @@ import Player from '@/components/client/player'
 import AuthProvider from '@/context/auth-context'
 import { getAuthSession } from '@/lib/auth'
 import { getUserInfo } from '@/db/functions/users'
+import { SignInModal, SignUpModal } from '@/components/client/auth-modals'
+import UploadModal from '@/components/client/upload-modal'
+import SubscribeModal from '@/components/client/subscribe-modal'
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -38,6 +41,10 @@ export default async function RootLayout({
               <Toaster />
             </main>
             <Player />
+            <SignInModal />
+            <SignUpModal />
+            <UploadModal />
+            <SubscribeModal />
           </Providers>
         </AuthProvider>
       </body>

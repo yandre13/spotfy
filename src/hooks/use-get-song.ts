@@ -11,7 +11,6 @@ export default function useGetSong(id: string) {
     const fetchSong = async () => {
       const res = await fetch(`/api/songs/${id}`)
       const { data } = (await res.json()) as { data: SongWithLiked }
-      console.log('data', data)
       setSong(data)
       setLoading(false)
     }
