@@ -23,6 +23,7 @@ export default function MediaItem({
   title,
   author,
   id: songId,
+  image_url,
   onClick,
   readOnly,
   children,
@@ -40,8 +41,8 @@ export default function MediaItem({
       <div className="relative rounded-md min-h-[48px] min-w-[48px] overflow-hidden">
         <Image
           fill
-          src="/images/liked.png"
-          alt="Media item"
+          src={`${process.env.NEXT_PUBLIC_STORAGE_URL}${image_url}`}
+          alt={title}
           className="object-cover"
         />
       </div>

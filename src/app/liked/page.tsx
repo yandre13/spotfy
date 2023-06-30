@@ -30,7 +30,6 @@ function Title() {
   )
 }
 
-//TODO: add middleware to check if user is logged in
 export default async function LikedPage() {
   const session = await getAuthSession()
   const likedSongs = await getLikedSongs(session?.user?.id)

@@ -40,14 +40,6 @@ export default function AccountContent() {
   }
 
   const handleClickSubscribe = () => {
-    // if (!user) {
-    //   onOpenChangeSignIn(true)
-    //   return
-    // } // middleware will redirect to / if user is not logged in
-    // if (!subscribed) {
-    //   //TODO: when user has 3 songs, show modal to subscribe
-    //   return
-    // }
     onOpenChangeSubscribe(true)
   }
 

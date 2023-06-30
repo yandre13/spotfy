@@ -27,7 +27,7 @@ export default function SongItem({
       <div className="relative aspect-square w-full h-full rounded-md overflow-hidden">
         <Image
           className="object-cover"
-          src={'/images/liked.png'}
+          src={`${process.env.NEXT_PUBLIC_STORAGE_URL}${song.image_url}`}
           fill
           alt="Song image"
         />

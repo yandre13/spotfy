@@ -3,16 +3,20 @@ import ListItem from '@/components/client/list-item'
 import SongItem from '@/components/client/song-item'
 import Box from '@/components/ui/box'
 import { getSongs } from '@/db/functions/songs'
+import { getAuthSession } from '@/lib/auth'
 
 export const revalidate = 0
 
 export default async function Home() {
   const songs = await getSongs()
+  const session = await getAuthSession()
+  const user = session?.user
+  const title = user?.name ? `Welcome back, ${user.name}` : 'Welcome to Spotfy'
 
   return (
     <section>
       <Box className="h-full overflow-hidden" asPageContainer>
-        <Header title="Welcome back" />
+        <Header title={title} />
         <div className="px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 mt-4">
             <ListItem
