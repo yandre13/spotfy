@@ -11,15 +11,17 @@ import {
   Volume1,
   Volume2,
   VolumeX,
+  X,
 } from 'lucide-react'
 import useSound from 'use-sound'
 import { Slider } from '../ui/slider'
 import { cn } from '@/lib/cn'
 import usePlayer from '@/hooks/use-player'
 import { useEffect } from 'react'
+import { Button } from '../ui/button'
 
 function VolumeControls() {
-  const { volume, setVolume } = usePlayer()
+  const { volume, setVolume, reset } = usePlayer()
 
   const handleChange = (e: [number]) => {
     setVolume(e[0])
@@ -29,20 +31,29 @@ function VolumeControls() {
     volume > 0 && volume < 50 ? Volume1 : volume >= 50 ? Volume2 : VolumeX
 
   return (
-    <div className="flex items-center gap-x-2 w-[120px]">
-      <button
-        onClick={() => setVolume(volume === 0 ? 50 : 0)} //TODO: toggle mute with previous volume
+    <>
+      <div className="flex items-center gap-x-2 w-[120px]">
+        <button
+          onClick={() => setVolume(volume === 0 ? 50 : 0)} //TODO: toggle mute with previous volume
+        >
+          <IconVolume className="text-neutral-400 fill-neutral-400" />
+        </button>
+        <Slider
+          onValueChange={handleChange}
+          value={[volume]}
+          defaultValue={[volume]}
+          max={100}
+          step={1}
+        />
+      </div>
+      <Button
+        className="absolute -top-1 right-0 w-auto h-auto p-1 hidden group-hover:block"
+        variant="ghost"
+        onClick={reset}
       >
-        <IconVolume className="text-neutral-400 fill-neutral-400" />
-      </button>
-      <Slider
-        onValueChange={handleChange}
-        value={[volume]}
-        defaultValue={[volume]}
-        max={100}
-        step={1}
-      />
-    </div>
+        <X className="text-neutral-400 fill-neutral-400 w-4 h-4" />
+      </Button>
+    </>
   )
 }
 
@@ -127,7 +138,7 @@ export default function PlayerContent({
   songUrl: string
 }) {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 h-full ">
+    <div className="grid grid-cols-2 md:grid-cols-3 h-full group">
       <div className="flex">
         <div className="flex items-center gap-x-4">
           <MediaItem {...song} readOnly>
@@ -138,7 +149,7 @@ export default function PlayerContent({
       <div className="h-full flex justify-end md:justify-center items-center w-full md:max-w-[722px] gap-x-4 md:gap-x-6">
         <PlayerControls songUrl={songUrl} />
       </div>
-      <div className="hidden md:flex items-center justify-end w-full pr-2">
+      <div className="hidden md:flex items-center justify-end w-full pr-2 relative">
         <VolumeControls />
       </div>
     </div>

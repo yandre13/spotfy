@@ -1,4 +1,5 @@
 'use client'
+import usePlayer from '@/hooks/use-player'
 import { cn } from '@/lib/cn'
 import { useLayoutEffect, useRef } from 'react'
 
@@ -12,12 +13,18 @@ export default function Box({
   asPageContainer?: boolean
 }) {
   const ref = useRef<HTMLDivElement>(null)
+  const { activeId } = usePlayer()
 
   useLayoutEffect(() => {
+    if (!asPageContainer) return
     const element = ref.current
     function handleResize() {
       if (element && element.classList.contains('PageContainer')) {
-        const hasScrollBar = element.scrollHeight > element.clientHeight
+        // if activeId is true rest 80px to clientHeight
+        const clientHeight = activeId
+          ? element.clientHeight - 80
+          : element.clientHeight
+        const hasScrollBar = element.scrollHeight > clientHeight
         if (hasScrollBar) {
           element.classList.remove('overflow-hidden')
           element.classList.add('overflow-y-auto')
@@ -30,7 +37,7 @@ export default function Box({
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  }, [asPageContainer, activeId])
 
   return (
     <div

@@ -34,7 +34,7 @@ export default function SongItem({
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">
         <p className="font-semibold truncate w-full">{song.title}</p>
-        <p className="text-neutral-400 text-sm pb-4 w-full truncate">
+        <p className="text-neutral-400 text-sm pb-1 w-full truncate">
           By: {song.author}
         </p>
       </div>
