@@ -146,7 +146,7 @@ export default function SubscribeModal() {
 
   return (
     <ModalDialog
-      title="Only for premium users"
+      title="Subscribe to premium to continue"
       content={<ContentModal products={products || []} loading={loading} />}
       open={modals.subscribe}
       onOpenChange={onOpenChangeSubscribe}

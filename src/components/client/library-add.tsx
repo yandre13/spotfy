@@ -8,15 +8,14 @@ import { Button } from '../ui/button'
 export default function LibraryAdd() {
   const { onOpenChangeSignIn, onOpenChangeUpload, onOpenChangeSubscribe } =
     useModals()
-  const { user, subscribed } = useAuth()
+  const { user, subscribed, reachedUploadLimit } = useAuth()
 
   const handleClick = () => {
     if (!user) {
       onOpenChangeSignIn(true)
       return
     }
-    if (!subscribed) {
-      //TODO: when user has 3 songs, show modal to subscribe
+    if (reachedUploadLimit && !subscribed) {
       onOpenChangeSubscribe(true)
       return
     }

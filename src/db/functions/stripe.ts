@@ -81,6 +81,7 @@ export async function createOrRetrieveCustomer(uuid: string, email: string) {
         data: {
           id: uuid,
           stripe_customer_id: stripeCustomer.id,
+          email,
         },
       })
 

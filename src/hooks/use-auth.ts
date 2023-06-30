@@ -6,9 +6,5 @@ export default function useAuth() {
   if (!auth) {
     throw new Error('useAuth must be used within an AuthProvider')
   }
-  return {
-    user: auth.user,
-    userInfo: auth.userInfo,
-    subscribed: auth.subscribed,
-  }
+  return auth
 }

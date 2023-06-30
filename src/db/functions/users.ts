@@ -14,6 +14,7 @@ export async function getUserInfo(id?: string) {
           },
         },
       },
+      songs: true,
     },
   })
   return user || null

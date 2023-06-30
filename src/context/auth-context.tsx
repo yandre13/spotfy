@@ -9,12 +9,14 @@ type AuthContextType = {
   user: User
   userInfo: UserInfo
   subscribed: boolean
+  reachedUploadLimit: boolean
 }
 
 export const AuthContext = createContext<AuthContextType>({
   user: null,
   userInfo: null,
   subscribed: false,
+  reachedUploadLimit: false,
 })
 
 export default function AuthProvider({
@@ -31,6 +33,7 @@ export default function AuthProvider({
     user,
     userInfo,
     subscribed: !!userInfo?.subscriptions.length, // TODO: validate if has a canceled subscription
+    reachedUploadLimit: (userInfo?.songs ?? []).length >= 3,
   })
 
   return (
