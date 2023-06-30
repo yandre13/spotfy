@@ -11,7 +11,7 @@ export default async function Home() {
 
   return (
     <section>
-      <Box className="h-full overflow-hidden">
+      <Box className="h-full overflow-hidden" asPageContainer>
         <Header title="Welcome back" />
         <div className="px-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 mt-4">

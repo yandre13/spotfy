@@ -36,7 +36,10 @@ export default async function RootLayout({
         <AuthProvider auth={{ user, userInfo }}>
           <Providers>
             <Sidebar />
-            <main className="p-2 h-full pl-0 [&>section]:h-full" id="Main">
+            <main
+              className="lg:p-2 h-full lg:pl-0 [&>section]:h-full max-h-screen"
+              id="Main"
+            >
               {children}
               <Toaster />
             </main>

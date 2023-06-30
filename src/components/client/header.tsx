@@ -53,12 +53,18 @@ export default function Header({ className, title, children }: Props) {
           </button>
         </div>
         <div className="flex md:hidden gap-x-2 items-center">
-          <button className="rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75">
+          <Link
+            href="/"
+            className="rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75"
+          >
             <Home className="text-black h-5 w-5" />
-          </button>
-          <button className="rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75">
+          </Link>
+          <Link
+            href="/search"
+            className="rounded-full p-2 bg-white flex items-center justify-center hover:opacity-75"
+          >
             <Search className="text-black h-5 w-5" />
-          </button>
+          </Link>
         </div>
         <div className="flex justify-between items-center gap-x-4">
           {user && (

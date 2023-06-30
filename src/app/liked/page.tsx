@@ -36,7 +36,7 @@ export default async function LikedPage() {
   const likedSongs = await getLikedSongs(session?.user?.id)
   return (
     <section>
-      <Box className="h-full overflow-hidden">
+      <Box className="h-full overflow-hidden" asPageContainer>
         <Header>
           <Title />
         </Header>

@@ -59,4 +59,19 @@ body,
     font-feature-settings: 'rlig' 1, 'calt' 1;
     color-scheme: dark;
   }
+  .Box::-webkit-scrollbar {
+    @apply lg:w-2; /* width of the entire scrollbar */
+  }
+
+  .Box::-webkit-scrollbar-track {
+    @apply lg:bg-transparent; /* color of the tracking area */
+  }
+
+  .Box::-webkit-scrollbar-thumb {
+    @apply lg:bg-neutral-700; /* color of the scroll thumb */
+    @apply lg:rounded-lg; /* roundness of the scroll thumb */
+    @apply lg:border-neutral-700; /* creates padding around scroll thumb */
+    @apply lg:border-2; /* creates padding around scroll thumb */
+    @apply lg:border-solid; /* creates padding around scroll thumb */
+  }
 }

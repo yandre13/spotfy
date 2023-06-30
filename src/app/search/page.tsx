@@ -20,7 +20,7 @@ export default async function SearchPage({ searchParams }: SearchProps) {
 
   return (
     <section>
-      <Box className="h-full overflow-hidden">
+      <Box className="h-full overflow-hidden" asPageContainer>
         <Header title="Search" className="from-neutral-800" />
         <div className="px-6">
           <SearchInput />
