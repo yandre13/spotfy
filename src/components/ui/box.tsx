@@ -43,7 +43,7 @@ export default function Box({
     <div
       className={cn(
         'bg-neutral-900 rounded-lg h-fit w-full',
-        asPageContainer && 'PageContainer Box',
+        asPageContainer && 'PageContainer BoxScroll',
         className
       )}
       ref={ref}
