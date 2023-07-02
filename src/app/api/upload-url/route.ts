@@ -2,6 +2,8 @@ import S3 from 'aws-sdk/clients/s3'
 import { nanoid } from 'nanoid'
 import { NextRequest } from 'next/server'
 
+export const dynamic = 'force-dynamic'
+
 const s3 = new S3({
   apiVersion: '2006-03-01',
   accessKeyId: process.env.ACCESS_KEY_ID,
